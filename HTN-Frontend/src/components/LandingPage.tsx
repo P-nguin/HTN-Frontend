@@ -38,10 +38,8 @@ const LandingPage: React.FC<LandingPageProps> = ({events}) => {
     return (
         <LandingPageContainer>
             <WelcomeMessage>Hack The North</WelcomeMessage>
-            {!isLoggedIn && <LoginForm onLoginSuccess={handleLoginSuccess} 
-                                       onLoginFailure={handleLoginFailure}
-                                        />}
-            <EventList events={events}></EventList>
+            {!isLoggedIn && <LoginForm handleLoginSuccess={handleLoginSuccess} handleLoginFailure={handleLoginFailure} />}
+            <EventList events={events} isLoggedIn={false}></EventList>
         </LandingPageContainer>
     );
 };

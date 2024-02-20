@@ -46,26 +46,34 @@ const LoginRequest = styled.h3`
     color: ${theme.textPrimary};
 `;
 
+const ErrorMessage = styled.p`
+    color: red; // Or any color that suits your design for errors
+    margin-top: 10px; // Adds some space between the form and the error message
+`;
+
 type LoginFormProps = {
-    onLoginSuccess: () => void;
-    onLoginFailure: () => void;
+    handleLoginSuccess: () => void;
+    handleLoginFailure: () => void;
 };
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginFailure }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ handleLoginSuccess, handleLoginFailure }) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginFail, setLoginFail] = useState(false);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         if (username === "Daniel" && password === "Zhao") {
-            onLoginSuccess();
+            handleLoginSuccess();
             localStorage.setItem('username', username);
+            setLoginFail(false);
             navigate('/dashboard')
         }
         else {
-            onLoginFailure();
+            handleLoginFailure();
+            setLoginFail(true);
         }
     };
 
@@ -87,6 +95,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginFailure })
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <SubmitButton type="submit">Log In</SubmitButton>
+                    {loginFail && <ErrorMessage>Password or Username is Wrong.</ErrorMessage> }
                 </Form>
             </div>
             <img src={CPUIcon} alt='CPU-Icon' width='40%' height='40%' />

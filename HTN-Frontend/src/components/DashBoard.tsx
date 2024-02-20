@@ -34,7 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({events}) => {
         <DashboardContainer>
             <WelcomeMessage>Welcome {userName}</WelcomeMessage>
             <UpcomingEvents events={events} />
-            <EventList events={events} />
+            <EventList events={events} isLoggedIn={true} />
         </DashboardContainer>
     );
 };

@@ -7,6 +7,7 @@ import { theme } from '../styles/theme';
 
 interface EventListProps {
     events: EventData[];
+    isLoggedIn: boolean;
 }
 
 const EventListContainer = styled.div`
@@ -66,7 +67,7 @@ const ControlsContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-const EventList: React.FC<EventListProps> = ({ events }) => {
+const EventList: React.FC<EventListProps> = ({ events, isLoggedIn }) => {
     const [expandedEvent, setExpandedEvent] = useState<EventData | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -83,7 +84,8 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
         setIsExpanded(!isExpanded);
     };
 
-    const filteredEvents = events.filter(event => 
+    const visibleEvents = isLoggedIn? events : events.filter(event => event.permission !== 'private');
+    const filteredEvents = visibleEvents.filter(event => 
         event.id.toString().includes(searchQuery) || 
         event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (event.speakers && event.speakers.some(speaker => speaker.name.toLowerCase().includes(searchQuery.toLowerCase())))
@@ -103,7 +105,7 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                 {!isExpanded && <NotExpanded> Expand to View All Events </NotExpanded>}
             </ControlsContainer>
             {isExpanded && filteredEvents.map((event) => (
-                <SmallEventCard key={event.id} event={event} onExpand={() => handleExpandEvent(event)} />
+                <SmallEventCard key={event.id} event={event} onExpand={() => handleExpandEvent(event)}  />
             ))}
             {expandedEvent && <ExpandedEventCard event={expandedEvent} onClose={handleClose} />}
         </EventListContainer>

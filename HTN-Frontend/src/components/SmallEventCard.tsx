@@ -5,7 +5,7 @@ import { convertUnixTo24HourTime } from '../utils/timeUtils';
 import { capitalizeWordsUnderscores, capitalizeWordsSpaces } from '../utils/stringUtils';
 import EventData from '../types/EventData';
 
-interface Props {
+interface SmallEventCardProps {
     event: EventData;
     onExpand: () => void;
 }
@@ -22,7 +22,16 @@ const Card = styled.div`
     transition: box-shadow 0.3s ease-in-out;
     &:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
     }
+
+    // Hides scrollbar for WebKit browsers
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Make scrollbar invisible but still functional in Firefox
+    scrollbar-width: none; 
 `;
 
 const Title = styled.h3`
@@ -39,7 +48,7 @@ const Detail = styled.p`
     white-space: nowrap; // Prevent wrapping to ensure single-line appearance
 `;
 
-const SmallEventCard: React.FC<Props> = ({ event, onExpand }) => {
+const SmallEventCard: React.FC<SmallEventCardProps> = ({ event, onExpand }) => {
     return (
         <Card onClick={onExpand}>
             <Title>{event.name}</Title>

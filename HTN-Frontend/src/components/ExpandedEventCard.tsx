@@ -25,23 +25,21 @@ const Backdrop = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: ${theme.background};
-  padding: 20px;
-  border-radius: 5px;
-  max-height: 80vh;
-  max-width: 600px;
-  overflow-y: auto;
-  position: relative;
-`;
+    background-color: ${theme.background};
+    padding: 20px;
+    border-radius: 5px;
+    max-height: 80vh;
+    max-width: 600px;
+    overflow-y: auto;
+    position: relative;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: ${theme.backgroundSecondary};
-  font-size: 24px;
-  cursor: pointer;
+    // Hides scrollbar for WebKit browsers
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // Make scrollbar invisible but still functional in Firefox
+    scrollbar-width: none; 
 `;
 
 const EventTitle = styled.h2`
@@ -86,9 +84,10 @@ const ExpandedEventCard: React.FC<ExpandedEventCardProps> = ({ event, onClose })
     }, [event]);
 
     return (
-        <Backdrop>
-            <Card>
-                <CloseButton onClick={onClose}>&times;</CloseButton>
+        <Backdrop onClick={onClose}>
+            <Card onClick={(event: React.MouseEvent) => {
+                                    event.stopPropagation(); // Prevents the click from reaching the backdrop
+            }}>
                 <EventTitle>{event.name}</EventTitle>
                 <EventInfo><strong>Time:</strong> {convertUnixTo24HourTime(event.start_time)} - {convertUnixTo24HourTime(event.end_time)}</EventInfo>
                 <EventInfo><strong>Type:</strong> {event.event_type}</EventInfo>

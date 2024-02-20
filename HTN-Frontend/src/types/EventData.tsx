@@ -2,7 +2,7 @@ export default interface EventData {
     id: number;
     name: string;
     event_type: string;
-    permission?: string;
+    permission: string;
     start_time: number;
     end_time: number;
     description?: string;

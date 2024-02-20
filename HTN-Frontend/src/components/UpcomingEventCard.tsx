@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import EventData from '../types/EventData';
 import { convertUnixTo24HourTime } from '../utils/timeUtils';
+import { theme } from '../styles/theme';
 
 interface UpcomingEventCardProps {
     event: EventData;
@@ -11,7 +12,7 @@ interface UpcomingEventCardProps {
 const StyledEventCard = styled.div`
     height: 300px; // Adjust based on your design
     width: 200px; // Adjust based on your design
-    background-color: #00008b;
+    background-color: ${theme.primary};
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: flex;

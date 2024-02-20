@@ -12,8 +12,15 @@ interface LandingPageProps {
 }
 
 const WelcomeMessage = styled.h1`
-    color: ${theme.accent};
+    color: ${theme.textPrimary};
     margin-bottom: 24px;
+`;
+
+const LandingPageContainer = styled.div`
+    width: 60vw;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: ${theme.background};
 `;
 
 const LandingPage: React.FC<LandingPageProps> = ({events}) => {
@@ -29,11 +36,13 @@ const LandingPage: React.FC<LandingPageProps> = ({events}) => {
     }
 
     return (
-        <div>
+        <LandingPageContainer>
             <WelcomeMessage>Hack The North</WelcomeMessage>
-            {!isLoggedIn && <LoginForm onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
+            {!isLoggedIn && <LoginForm onLoginSuccess={handleLoginSuccess} 
+                                       onLoginFailure={handleLoginFailure}
+                                        />}
             <EventList events={events}></EventList>
-        </div>
+        </LandingPageContainer>
     );
 };
 

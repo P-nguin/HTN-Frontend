@@ -7,6 +7,23 @@ import LandingPage from './components/LandingPage';
 import Dashboard from './components/DashBoard';
 import EventData from './types/EventData';
 
+const FullWidthContainer = styled.div`
+    display: flex; // Use flexbox for layout
+    flex-direction: column; // Stack children vertically
+    align-items: center; // Center children horizontally
+    width: 100%; // Full width
+    min-height: 100vh; // Minimum height to fill the screen
+    box-sizing: border-box; // Include padding and border in the element's size
+    margin: 0 auto; // Auto margins for centering
+    padding: 0 1rem; // Padding on the sides
+`;
+
+const CenteredContent = styled.div`
+    max-width: 1200px; /* Set a max-width for the centered content */
+    margin: 0 auto; /* Center the content */
+    padding: 0 1rem; /* Add padding on the sides */
+`;
+
 function App() {
     const [events, setEvents] = useState<EventData[]>([]);
 
@@ -22,10 +39,14 @@ function App() {
 
     return (
         <BrowserRouter>
-                <Routes>
-                <Route path="/" element={<LandingPage events={events}/>} />
-                <Route path="/dashboard" element={<Dashboard events={events}/>} />
-                </Routes>
+            <FullWidthContainer>
+                <CenteredContent>
+                    <Routes>
+                        <Route path="/" element={<LandingPage events={events} />} />
+                        <Route path="/dashboard" element={<Dashboard events={events} />} />
+                    </Routes>
+                </CenteredContent>
+            </FullWidthContainer>
         </BrowserRouter>
     );
 }

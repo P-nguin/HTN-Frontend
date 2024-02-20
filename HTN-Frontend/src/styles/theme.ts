@@ -1,5 +1,11 @@
 export const theme = {
-  background: '#1e3a8a', // deep blue for the night sky
-  text: '#e0f2fe', // light blue for snow-like text
-  accent: '#60a5fa', // lighter blue for accents
+    background: '#F4F7FA',
+    backgroundSecondary: '#D9E2EC',
+    primary: '#4A90E2',
+    secondary: '#35495E',
+    tertiary: '#AAB7C4', 
+    accent: '#50BFE6', 
+    textPrimary: '#2E3D49',
+    textSecondary: '#627D98',
+    textTertiary: '#808080',
 };

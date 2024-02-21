@@ -1,104 +1,115 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { theme } from '../styles/theme';
-import CPUIcon from '../assets/CPU-icon.png'
+import styled from 'styled-components'; 
+import { theme } from '../styles/theme'; 
+import CPUIcon from '../assets/CPU-icon.png';
 
+// Styled component for the form, arranging inputs and button vertically
 const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 10px;
 `;
 
+// Styled component for input fields with consistent styling
 const Input = styled.input`
     padding: 8px;
-    border: 1px solid ${theme.accent};
-    border-radius: 4px;
-    background-color: ${theme.background};
-    color: ${theme.textPrimary};
+    border: 1px solid ${theme.accent}; // Uses accent color from theme for the border
+    border-radius: 4px; // Rounded corners for a modern look
+    background-color: ${theme.background}; // Background color from theme
+    color: ${theme.textPrimary}; // Text color from theme
 `;
 
+// Styled component for the submit button with hover effect
 const SubmitButton = styled.button`
-    background: ${theme.accent};
-    color: ${theme.background};
+    background: ${theme.accent}; // Button background color from theme
+    color: ${theme.background}; // Text color from theme
     padding: 10px;
     border: none;
-    cursor: pointer;
+    cursor: pointer; // Changes cursor to pointer on hover over the button
 
     &:hover {
-        opacity: 0.8; 
+        opacity: 0.8; // Slightly fades the button on hover for feedback
     }
 `;
 
+// Container for the entire LoginForm, with some styling for layout and appearance
 const LoginFormContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid ${theme.accent};
-    background: ${theme.backgroundSecondary};
-    border-radius: 4px;
+    flex-direction: row; // Arranges elements side by side
+    justify-content: space-between; // Spaces out children elements
+    border: 1px solid ${theme.accent}; // Border color from theme
+    background: ${theme.backgroundSecondary}; // Background color from theme
+    border-radius: 4px; // Rounded corners
     padding: 10px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 10%; // Padding on the left for inner spacing
+    padding-right: 10%; // Padding on the right for inner spacing
 `;
 
+// Styled component for the login request message
 const LoginRequest = styled.h3`
-    color: ${theme.textPrimary};
+    color: ${theme.textPrimary}; // Text color from theme
 `;
 
+// Styled component for displaying error messages
 const ErrorMessage = styled.p`
-    color: red; // Or any color that suits your design for errors
+    color: red; // Color for error messages to stand out
     margin-top: 10px; // Adds some space between the form and the error message
 `;
 
+// Type definition for LoginForm component props
 type LoginFormProps = {
-    handleLoginSuccess: () => void;
-    handleLoginFailure: () => void;
+    handleLoginSuccess: () => void; // Callback for successful login
+    handleLoginFailure: () => void; // Callback for failed login
 };
 
+// LoginForm functional component definition
 const LoginForm: React.FC<LoginFormProps> = ({ handleLoginSuccess, handleLoginFailure }) => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [loginFail, setLoginFail] = useState(false);
+    const navigate = useNavigate(); // Hook to navigate programmatically
+    const [username, setUsername] = useState(''); // State for storing the username input
+    const [password, setPassword] = useState(''); // State for storing the password input
+    const [loginFail, setLoginFail] = useState(false); // State to track login failure for error message display
 
+    // Handler for form submission
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        event.preventDefault(); // Prevents the default form submit action
         
+        // Dummy authentication check
         if (username === "Daniel" && password === "Zhao") {
-            handleLoginSuccess();
-            localStorage.setItem('username', username);
-            setLoginFail(false);
-            navigate('/dashboard')
+            handleLoginSuccess(); // Calls success handler
+            localStorage.setItem('username', username); // Stores username in localStorage
+            setLoginFail(false); // Resets login failure state
+            navigate('/dashboard') // Navigates to dashboard page on success
         }
         else {
-            handleLoginFailure();
-            setLoginFail(true);
+            handleLoginFailure(); // Calls failure handler
+            setLoginFail(true); // Updates state to reflect login failure
         }
     };
 
+    // Render method for LoginForm component
     return (
         <LoginFormContainer>
             <div>
-                <LoginRequest>Please Login to View All Events</LoginRequest>
+                <LoginRequest>Please Login to View All Events</LoginRequest> {/* Displays login request message */}
                 <Form onSubmit={handleSubmit}>
                     <Input
                         type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username" // Placeholder for username input
+                        value={username} // Binds state to input value
+                        onChange={(e) => setUsername(e.target.value)} // Updates state on input change
                     />
                     <Input
                         type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password" // Placeholder for password input
+                        value={password} // Binds state to input value
+                        onChange={(e) => setPassword(e.target.value)} // Updates state on input change
                     />
-                    <SubmitButton type="submit">Log In</SubmitButton>
-                    {loginFail && <ErrorMessage>Password or Username is Wrong.</ErrorMessage> }
+                    <SubmitButton type="submit">Log In</SubmitButton> {/* Submission button */}
+                    {loginFail && <ErrorMessage>Password or Username is Wrong.</ErrorMessage> } {/* Conditionally displays error message */}
                 </Form>
             </div>
-            <img src={CPUIcon} alt='CPU-Icon' width='40%' height='40%' />
+            <img src={CPUIcon} alt='CPU-Icon' width='40%' height='40%' /> {/* Displays an image next to the form */}
         </LoginFormContainer>
     );
 };

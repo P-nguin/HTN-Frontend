@@ -10,6 +10,7 @@ interface EventListProps {
     isLoggedIn: boolean;
 }
 
+// Styled components for layout and styling
 const EventListContainer = styled.div`
     padding: 20px;
     background: ${theme.backgroundSecondary};
@@ -18,6 +19,7 @@ const EventListContainer = styled.div`
     margin-top: 10px;
 `;
 
+// Button to toggle the list between expanded and minimized states
 const ToggleButton = styled.button`
     background-color: ${theme.secondary};
     color: white;
@@ -35,6 +37,7 @@ const ToggleButton = styled.button`
     }
 `;
 
+// Input for searching through the list of events
 const SearchInput = styled.input`
     padding: 10px;
     margin-right: 2.5%;
@@ -51,6 +54,7 @@ const SearchInput = styled.input`
     }
 `;
 
+// Styled message displayed when the event list is not expanded
 const NotExpanded = styled.h3`
     padding: 10px;
     margin-right: 50%; // This might not be necessary unless you want to push the text to the left
@@ -60,6 +64,7 @@ const NotExpanded = styled.h3`
     justify-content: center; // Center the text horizontally if necessary
 `;
 
+// Container for search and toggle UI elements
 const ControlsContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -67,30 +72,36 @@ const ControlsContainer = styled.div`
     margin-bottom: 20px;
 `;
 
+// Main EventList functional component
 const EventList: React.FC<EventListProps> = ({ events, isLoggedIn }) => {
-    const [expandedEvent, setExpandedEvent] = useState<EventData | null>(null);
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [expandedEvent, setExpandedEvent] = useState<EventData | null>(null); // State for tracking the currently expanded event
+    const [isExpanded, setIsExpanded] = useState(false); // State to track if the list is expanded
+    const [searchQuery, setSearchQuery] = useState(''); // State for the search query
 
+    // Function to handle expanding an event to show more details
     const handleExpandEvent = (event: EventData) => {
         setExpandedEvent(event);
     };
 
+    // Function to close the expanded event view
     const handleClose = () => {
         setExpandedEvent(null);
     };
 
+    // Function to toggle the expanded state of the event list
     const toggleList = () => {
         setIsExpanded(!isExpanded);
     };
 
-    const visibleEvents = isLoggedIn? events : events.filter(event => event.permission !== 'private');
+    // Filtering events based on visibility and search query
+    const visibleEvents = isLoggedIn ? events : events.filter(event => event.permission !== 'private');
     const filteredEvents = visibleEvents.filter(event => 
         event.id.toString().includes(searchQuery) || 
         event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (event.speakers && event.speakers.some(speaker => speaker.name.toLowerCase().includes(searchQuery.toLowerCase())))
     );
     
+    // Render logic for the component, displaying different UI elements based on state
     return (
         <EventListContainer>
             <ControlsContainer>

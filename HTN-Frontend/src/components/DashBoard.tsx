@@ -1,8 +1,7 @@
-// Imports necessary React hooks, components, and styling utilities
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../styles/theme';
-import EventData from '../types/EventData'; // Import the EventData type definition
+import EventData from '../types/EventData';
 import EventList from './EventList';
 import UpcomingEvents from './UpcomingEvents';
 

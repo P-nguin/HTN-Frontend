@@ -64,6 +64,11 @@ const SimilarEvents = styled.div`
   color: ${theme.primary};
 `;
 
+const EventLinks = styled.p`
+  margin-top: 20px;
+  color: ${theme.primary}
+`;
+
 const ExpandedEventCard: React.FC<ExpandedEventCardProps> = ({ event, onClose }) => {
     const [relatedEvents, setRelatedEvents] = useState<EventData[]>([]);
     useEffect(() => {
@@ -93,6 +98,11 @@ const ExpandedEventCard: React.FC<ExpandedEventCardProps> = ({ event, onClose })
                 <EventInfo><strong>Type:</strong> {event.event_type}</EventInfo>
                 <EventInfo><strong>Permission:</strong> {event.permission}</EventInfo>
                 <Description>{event.description}</Description>
+                <EventLinks>
+                    <a href={event.public_url? event.public_url : event.private_url}>
+                        Join the {event.public_url? event.public_url : event.private_url}
+                    </a>
+                </EventLinks>
                 <SimilarEvents>
                     <h3>Similar Events</h3>
                         {relatedEvents.map((relEvent) => (
